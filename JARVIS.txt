@@ -1,0 +1,20 @@
+search ==> Search the thing you want
+hello ==> speak "Hellow sir, how may i help you"
+how are you ==> It will greet you 
+fine ==> On answering it will greet you 
+open youtube ==> open youtube for you 
+open google ==>open google for you 
+open udemy ==>opens Abir udemy account 
+open coursera==>opens my coursera account 
+open my classroom ==>opens my google classroom 
+open my maps classroom & open my maths classroom ==> opens my maths classroom 
+open my physics classroom ==>opens my physics classroom 
+open my electrical classroom ==>opens my electrical classroom 
+open my github ==>opens my github account 
+open my gmail ==>opens my gmail
+open my college website ==>opens my college website
+my music ==>play my favorite music on Youtube 
+play music ==>play music useing the playsound module of pyhton 
+what is the time ==> Tells you the time 
+open vs code ==>Open vs code for programming 
+exit ==>exit the program by greeting you 
