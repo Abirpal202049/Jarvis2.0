@@ -11,7 +11,7 @@ root= Tk()
 root.title('J.A.R.V.I.S')
 root.geometry('400x800')
 # root.iconbitmap('boss.ico')
-root.iconbitmap('hero.ico')
+root.iconbitmap('./icon/hero.ico')
 root.maxsize(400,800)
 root.minsize(400,800)
 
