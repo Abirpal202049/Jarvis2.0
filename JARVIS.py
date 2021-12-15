@@ -5,7 +5,7 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import smtplib
-from playsound import playsound
+# from playsound import playsound
 import requests,json
 
 # Making google crome as the browser to open the content 
@@ -174,7 +174,20 @@ def command():
                 else: 
                     speak(" City Not Found ")
 
-
+        elif 'news' in query :
+            complete_url = 'https://newsapi.org/v2/top-headlines?country=in&apiKey=dd4c42a274c14a0587f6225427ad4b6b'
+            response = requests.get(complete_url)
+            speak("Here are some of the latest News")
+            x = response.json()
+            table = ['The First One is : ', 'The Second One is : ', 'The Third One is : ', 'The Fourth is : ', 'The Fifth One is : ']
+            if x['status'] == 'ok':
+                y = x["articles"]
+                for value in range(5):
+                    d = y[value]["title"]
+                    print(d)
+                    speak(table[value])
+                    speak(d)
+            print(x["status"])
 
 
         # Lets google do it
@@ -185,26 +198,7 @@ def command():
         elif 'open google' in query:
             speak('Opening sir..')
             webbrowser.get('chrome').open('google.com')
-
-
-
-        # Search operation using google by opening the google browser   
-        elif 'search' in query:
-            speak("searching sir...")
-            try: 
-                from googlesearch import search 
-            except ImportError:  
-                print("No module named 'google' found") 
-  
-            query = query.replace("search", "")
-            query = query.replace("jarvis", "")
-
-            for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
-                break
-            print(j)
-            webbrowser.get('chrome').open(j)
-
-
+        
 
         # Educational purpose site
         elif 'open udemy' in query:
@@ -253,18 +247,45 @@ def command():
         elif 'open my college website' in query:
             speak('Opening sir..')
             webbrowser.get('chrome').open("http://www.aecwb.edu.in/?pn=94728362228456373")
+
+
+
+        # Search operation using google by opening the google browser   
+        elif 'open' in query:
+            speak("searching sir...")
+            try: 
+                from googlesearch import search 
+            except ImportError:  
+                print("No module named 'google' found") 
+  
+            query = query.replace("search", "")
+            query = query.replace("jarvis", "")
+
+            for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
+                break
+            print(j)
+            webbrowser.get('chrome').open(j)
+
+
+
+        
+        
  
 
 
         # Music player system     
         elif 'my music' in query:
-            webbrowser.open("https://youtu.be/D8ksFyjTCp0")   
+            webbrowser.open("https://www.youtube.com/watch?v=s-bZD3O3P80")   
         
         
 
         elif 'music' in query:
-            speak("Playing Sir, Enjoy....")
-            playsound('./BANG.mp3')
+            try :
+                speak("Playing Sir, Enjoy....")
+                from playsound import playsound
+                playsound('BANG.mp3')
+            except :
+                speak('Sorry Sir I cant play the music')
             
         
 
