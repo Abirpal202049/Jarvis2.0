@@ -5,8 +5,9 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import smtplib
-# from playsound import playsound
 import requests,json
+import vlc
+import random
 
 # Making google crome as the browser to open the content 
 chrome_path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
@@ -22,7 +23,6 @@ def speak(audio):
     engine.say(audio)
     engine.runAndWait()
 
-
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour>=5 and hour<12:
@@ -35,8 +35,6 @@ def wishMe():
         speak("Good Evening Sir!")  
 
     speak("I am Jarvis. I am your personal assistant. How may I help you")       
-
-
 
 def takeCommand():
     #It takes microphone input from the user and returns string output
@@ -84,9 +82,6 @@ def takeCommando():
         return "None"
     return query
 
-
-
-
 def sendEmail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -95,12 +90,13 @@ def sendEmail(to, content):
     server.sendmail('anish28032002@gmail.com', to, content)
     server.close()
 
-
-
+def musicchanger():
+    music = ["35.O Mere Dil Ke Chain.mp3", "36.Yeh Sham Mastani.mp3", "BANG.mp3", "song1.m4a", "song2.mp3", "song3.mp3"]
+    player = vlc.MediaPlayer(random.choice(music))
+    print(player)
+    return player
 
 # all the command that are to pass to get asuitable result 
-
-
 def command():
 
 
@@ -111,6 +107,13 @@ def command():
     if(strTime>12):
         strTime=strTime-12
     speak(f"and Sir, right now the time is {strTime} {strTime2}")
+
+
+    player = musicchanger()
+    # music = ["35.O Mere Dil Ke Chain.mp3", "36.Yeh Sham Mastani.mp3", "BANG.mp3"]
+    
+    # player = vlc.MediaPlayer(random.choice(music))
+    # print(player)
 
     while True:
     # if 1:
@@ -131,13 +134,17 @@ def command():
             speak('Hello Sir, How may I help you')
 
         elif 'thank you' in query:
-            speak("I am always there with you sir")
+            speak("Thank you sir Please Let me Know When You need me again")
         
         elif 'how are you' in query:
             speak("I am fine Sir")
             speak("What about you Sir?")
 
-        elif 'fine' in query or 'great' in query :
+        elif 'great' in query:
+            speak("Thank you Sir ")
+            speak("I will try to impress you in future")
+
+        elif 'fine' in query :
             speak("wow, thats Great Sir! ")
 
         elif 'temperature' in query :
@@ -208,6 +215,13 @@ def command():
         elif 'open coursera' in query:
             speak('Opening sir..')
             webbrowser.get('chrome').open('coursera.com')
+
+
+        #Open vs code for me 
+        elif 'open vs code' in query:
+            speak('opening vs code sir..')
+            codePath = "C:\\Users\\Abir Pal\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            os.startfile(codePath)
         
 
 
@@ -266,53 +280,57 @@ def command():
             print(j)
             webbrowser.get('chrome').open(j)
 
+        # ? youtube play
+        elif 'play' in query and 'youtube' in query:
+            speak("Playing sir...")
+            try: 
+                from googlesearch import search 
+            except ImportError:  
+                print("No module named 'google' found") 
+  
+            query = query.replace("play", "")
+            query = query.replace("youtube", "")
 
-
-        
-        
- 
+            for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
+                break
+            print(j)
+            webbrowser.get('chrome').open(j)
 
 
         # Music player system     
-        elif 'my music' in query:
-            webbrowser.open("https://www.youtube.com/watch?v=s-bZD3O3P80")   
+        elif 'any music' in query:
+            player.stop()
+            player = musicchanger()
+            speak('Playing sir..')
+            player.play()
+
+        elif 'pause' in query:
+            speak('Pausing the music')
+            player.pause()
+
+        elif 'play' in query:
+            speak('Play the music')
+            player.play()
+
+        elif 'stop' in query:
+            speak('Music Stopped')
+            player.stop()
+
+        elif 'change the music' in query:
+            player.stop()
+            player = musicchanger()
+            player.play()
         
         
 
-        elif 'music' in query:
+        elif 'some music' in query:
             try :
                 speak("Playing Sir, Enjoy....")
                 from playsound import playsound
                 playsound('BANG.mp3')
             except :
                 speak('Sorry Sir I cant play the music')
-            
-        
-
-        elif 'old song' in query:
-            speak('which one sir ')
-            arr=['O Mere Dil Ke Chain','Yeh Sham Mastani']
-            query_new = takeCommand().lower()
-
-            if 'list' in query_new:
-                speak('Here is the list Sir...') 
-                print(arr)
-                speak(arr)
-                speak('which one sir ')
-                song=takeCommand().lower()
-
-                if 'first' in song:
-                    speak('Enjoy sir...')
-                    playsound('35.O Mere Dil Ke Chain.mp3')
-
-                    
-                elif 'second' in song:
-                    speak('Enjoy sir...')
-                    playsound('36.Yeh Sham Mastani.mp3')
                 
-
-            
-        
 
 
         #Time teller
@@ -326,11 +344,11 @@ def command():
             speak(f"Sir, the time is {strTime} {strTime2}")
 
 
-        #Open vs code for me 
-        elif 'open vs code' in query:
-            speak('opening vs code sir..')
+        elif 'close google' in query:
+            speak('closing google sir..')
             codePath = "C:\\Users\\Abir Pal\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-            os.startfile(codePath)
+            os.system("taskkill /f /im chrome.exe")
+
 
 
         # Exit from the program
@@ -351,9 +369,6 @@ def command():
                 print(e)
                 speak("Sorry Sir . I am not able to send this email. Due to some issue ")    
 
-
-
-
 def boom(speak, wishMe, takeCommando, command):
     wishMe()
     while True:
@@ -365,6 +380,8 @@ def boom(speak, wishMe, takeCommando, command):
         elif 'exit' in w:
             speak("Thank You sir , and Have a Good day ")
             break
+
+
 
 if __name__ == "__main__":
     boom(speak, wishMe, takeCommando, command)
