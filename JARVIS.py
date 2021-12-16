@@ -8,7 +8,7 @@ import smtplib
 import requests,json
 import vlc
 import random
-
+from keyboard import press_and_release
 # Making google crome as the browser to open the content 
 chrome_path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 webbrowser.register('chrome', None,webbrowser.BackgroundBrowser(chrome_path))
@@ -242,7 +242,9 @@ def command():
         elif'open my electrical classroom' in query:
             speak('Opening sir..')
             webbrowser.get('chrome').open("https://classroom.google.com/u/0/c/MjE1MTExNjM1OTIx")
-
+        elif 'close tab' in query:
+            speak('closing sir..')
+            press_and_release('ctrl + w')
 
 
         # My social account and other resourses 
