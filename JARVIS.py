@@ -61,7 +61,6 @@ def takeCommand():
 
 def takeCommando():
     #It takes microphone input from the user and returns string output
-
     r = sr.Recognizer()
     with sr.Microphone() as source:
         # speak("Listening Sir")
@@ -82,6 +81,7 @@ def takeCommando():
         return "None"
     return query
 
+
 def sendEmail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -90,16 +90,20 @@ def sendEmail(to, content):
     server.sendmail('anish28032002@gmail.com', to, content)
     server.close()
 
+
 def musicchanger():
     music = ["35.O Mere Dil Ke Chain.mp3", "36.Yeh Sham Mastani.mp3", "BANG.mp3", "song1.m4a", "song2.mp3", "song3.mp3"]
-    player = vlc.MediaPlayer(random.choice(music))
-    print(player)
+    temp = random.choice(music)
+    print("Temp : ",temp)
+
+    if temp == random.choice(music):
+        musicchanger()
+    player = vlc.MediaPlayer(temp)
+    print("Player :",player)
     return player
 
 # all the command that are to pass to get asuitable result 
 def command():
-
-
     strTime = datetime.datetime.now().strftime("%H")   
     strTime2=datetime.datetime.now().strftime("%M")
     strTime=int(strTime)
