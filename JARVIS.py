@@ -82,15 +82,6 @@ def takeCommando():
     return query
 
 
-def sendEmail(to, content):
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.login('anish28032002@gmail.com', '########')
-    server.sendmail('anish28032002@gmail.com', to, content)
-    server.close()
-
-
 def musicchanger():
     music = ["35.O Mere Dil Ke Chain.mp3", "36.Yeh Sham Mastani.mp3", "BANG.mp3", "song1.m4a", "song2.mp3", "song3.mp3"]
     temp = random.choice(music)
@@ -125,33 +116,53 @@ def command():
 
         # Logic for executing tasks based on query
         if 'wikipedia' in query:
-            speak('Searching sir...')
-            query = query.replace("wikipedia", "")
-            results = wikipedia.summary(query, sentences=2)
-            speak("According to Me")
-            print(results)
-            speak(results)
+            try :
+                speak('Searching sir...')
+                query = query.replace("wikipedia", "")
+                results = wikipedia.summary(query, sentences=2)
+                speak("According to Me")
+                print(results)
+                speak(results)
+            except:
+                print("Some error occured")
         
 
         #Greeting 
         elif 'hello' in query:
-            speak('Hello Sir, How may I help you')
+            try :
+                speak('Hello Sir, How may I help you')
+            except:
+                print("Some error occured")
 
         elif 'thank you' in query:
-            speak("Thank you sir Please Let me Know When You need me again")
+            try :
+                speak("Thank you sir Please Let me Know When You need me again")  
+            except:
+                print("Some error occured")  
         
         elif 'how are you' in query:
-            speak("I am fine Sir")
-            speak("What about you Sir?")
+            try :
+                speak("I am fine Sir")
+                speak("What about you Sir?")
+            except:
+                print("Some error occured")
 
         elif 'great' in query:
-            speak("Thank you Sir ")
-            speak("I will try to impress you in future")
+            try:
+                speak("Thank you Sir ")
+                speak("I will try to impress you in future")
+            except:
+                print("Some error occured")
 
         elif 'fine' in query :
-            speak("wow, thats Great Sir! ")
+            try :
+                speak("wow, thats Great Sir! ")
+            except:
+                print("Some error occured")
+
 
         elif 'temperature' in query :
+            try:
                 api_key = "e342367614d61e912d92e29103041f54"
                 complete_url = 'http://api.openweathermap.org/data/2.5/weather?'+'q='+'Asansol'+'&appid='+api_key
                 response = requests.get(complete_url)
@@ -162,7 +173,12 @@ def command():
                     speak(" Sir the Temperature is " + str(round(current_temperature-273.15,0)) + 'degree Celsius Outside')
                 else: 
                     speak(" City Not Found ")
+            except:
+                print("Some error occured")
+
+
         elif 'weather' in query :
+            try :
                 speak('Sir, which place weather you want know')
                 query_new = takeCommand().lower()
 
@@ -184,198 +200,221 @@ def command():
                     speak(f"And Sir, the Air Presser is {current_pressure} pascal ")
                 else: 
                     speak(" City Not Found ")
+            except:
+                print("Some error occured")
+
+
 
         elif 'news' in query :
-            complete_url = 'https://newsapi.org/v2/top-headlines?country=in&apiKey=dd4c42a274c14a0587f6225427ad4b6b'
-            response = requests.get(complete_url)
-            speak("Here are some of the latest News")
-            x = response.json()
-            table = ['The First One is : ', 'The Second One is : ', 'The Third One is : ', 'The Fourth is : ', 'The Fifth One is : ']
-            if x['status'] == 'ok':
-                y = x["articles"]
-                for value in range(5):
-                    d = y[value]["title"]
-                    print(d)
-                    speak(table[value])
-                    speak(d)
-            print(x["status"])
+            try:
+                complete_url = 'https://newsapi.org/v2/top-headlines?country=in&apiKey=dd4c42a274c14a0587f6225427ad4b6b'
+                response = requests.get(complete_url)
+                speak("Here are some of the latest News")
+                x = response.json()
+                table = ['The First One is : ', 'The Second One is : ', 'The Third One is : ', 'The Fourth is : ', 'The Fifth One is : ']
+                if x['status'] == 'ok':
+                    y = x["articles"]
+                    for value in range(5):
+                        d = y[value]["title"]
+                        print(d)
+                        speak(table[value])
+                        speak(d)
+                print(x["status"])
+            except:
+                print("Some error occured")
 
 
         # Lets google do it
         elif 'open youtube' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("youtube.com")
+            try :
+                speak('Opening sir..')
+                webbrowser.get('chrome').open("youtube.com")
+            except:
+                print("Some error occured")
 
         elif 'open google' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open('google.com')
-        
-
-        # Educational purpose site
-        elif 'open udemy' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open('udemy.com')
-
-        elif 'open coursera' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open('coursera.com')
+            try :
+                speak('Opening sir..')
+                webbrowser.get('chrome').open('google.com')
+            except:
+                print("Some error occured")
 
 
         #Open vs code for me 
         elif 'open vs code' in query:
-            speak('opening vs code sir..')
-            codePath = "C:\\Users\\Abir Pal\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-            os.startfile(codePath)
+            try:
+                speak('opening vs code sir..')
+                codePath = "C:\\Users\\Abir Pal\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                os.startfile(codePath)
+            except:
+                print("Some error occured")
         
 
 
 
         #My classroom section
         elif'open my classroom' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("classroom.google.com")
-        
-        elif'open my maps classroom' in query or'open my maths classroom' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("https://classroom.google.com/u/0/c/MTUzNDAxMTA4OTQ4")
+            try :
+                speak('Opening sir..')
+                webbrowser.get('chrome').open("classroom.google.com")
+            except:
+                print("Some error occured")
 
-        elif'open my physics classroom' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("https://classroom.google.com/u/0/c/NTQwOTQxNjY2Nzla")
 
-        elif'open my electrical classroom' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("https://classroom.google.com/u/0/c/MjE1MTExNjM1OTIx")
-        elif 'close tab' in query:
-            speak('closing sir..')
-            press_and_release('ctrl + w')
+        elif 'close' in query and 'tab' in query or 'close the tab' in query:
+            try :
+                speak('closing sir..')
+                press_and_release('ctrl + w')
+            except:
+                print("Some error occured")
 
 
         # My social account and other resourses 
         elif 'open my github' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("github.com")
+            try:
+                speak('Opening sir..')
+                webbrowser.get('chrome').open("github.com")
+            except:
+                print("Some error occured")
         
         elif 'open my gmail' in query or 'open my email' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("gmail.com")
+            try :
+                speak('Opening sir..')
+                webbrowser.get('chrome').open("gmail.com")
+            except:
+                print("Some error occured")
 
         elif 'open my LinkdIn' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("linkdin.com")
+            try :
+                speak('Opening sir..')
+                webbrowser.get('chrome').open("linkdin.com")
+            except:
+                print("Some error occured")
 
         elif 'open my college website' in query:
-            speak('Opening sir..')
-            webbrowser.get('chrome').open("http://www.aecwb.edu.in/?pn=94728362228456373")
+            try :
+                speak('Opening sir..')
+                webbrowser.get('chrome').open("http://www.aecwb.edu.in/?pn=94728362228456373")
+            except:
+                print("Some error occured")
 
 
 
         # Search operation using google by opening the google browser   
         elif 'open' in query:
-            speak("searching sir...")
-            try: 
-                from googlesearch import search 
-            except ImportError:  
-                print("No module named 'google' found") 
-  
-            query = query.replace("search", "")
-            query = query.replace("jarvis", "")
+            try:
+                speak("searching sir...")
+                try: 
+                    from googlesearch import search 
+                except ImportError:  
+                    print("No module named 'google' found") 
+    
+                query = query.replace("search", "")
+                query = query.replace("jarvis", "")
 
-            for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
-                break
-            print(j)
-            webbrowser.get('chrome').open(j)
+                for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
+                    break
+                print(j)
+                webbrowser.get('chrome').open(j)
+            except:
+                print("Some error occured")
 
         # ? youtube play
         elif 'play' in query and 'youtube' in query:
-            speak("Playing sir...")
-            try: 
-                from googlesearch import search 
-            except ImportError:  
-                print("No module named 'google' found") 
-  
-            query = query.replace("play", "")
-            query = query.replace("youtube", "")
+            try :
+                speak("Playing sir...")
+                try: 
+                    from googlesearch import search 
+                except ImportError:  
+                    print("No module named 'google' found") 
+    
+                query = query.replace("play", "")
+                query = query.replace("youtube", "")
 
-            for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
-                break
-            print(j)
-            webbrowser.get('chrome').open(j)
+                for j in search(query, tld="co.in", num=10, stop=10, pause=2): 
+                    break
+                print(j)
+                webbrowser.get('chrome').open(j)
+            except:
+                print("Some error occured")
 
 
         # Music player system     
-        elif 'any music' in query:
-            player.stop()
-            player = musicchanger()
-            speak('Playing sir..')
-            player.play()
+        elif 'any music' in query or 'some music' in query or 'a song' in query:
+            try :
+                player.stop()
+                player = musicchanger()
+                speak('Playing sir..')
+                player.play()
+            except:
+                print("Some error occured")
 
         elif 'pause' in query:
-            speak('Pausing the music')
-            player.pause()
+            try :
+                speak('Music Paused')
+                player.pause()
+            except:
+                print("Some error occured")
 
-        elif 'play' in query:
-            speak('Play the music')
-            player.play()
+        elif 'play' in query or 'resume' in query:
+            try :
+                speak('Resuming the music')
+                player.play()
+            except:
+                print("Some error occured")
 
         elif 'stop' in query:
-            speak('Music Stopped')
-            player.stop()
-
-        elif 'change the music' in query:
-            player.stop()
-            player = musicchanger()
-            player.play()
-        
-        
-
-        elif 'some music' in query:
             try :
-                speak("Playing Sir, Enjoy....")
-                from playsound import playsound
-                playsound('BANG.mp3')
-            except :
-                speak('Sorry Sir I cant play the music')
+                speak('Music Stopped')
+                player.stop()
+            except:
+                print("Some error occured")
+
+        elif 'change the music' in query or 'change the song' in query:
+            try :
+                player.stop()
+                speak("Changing the music")
+                player = musicchanger()
+                player.play()
+            except:
+                print("Some error occured")
+        
                 
 
 
         #Time teller
         elif 'time' in query:
-            strTime = datetime.datetime.now().strftime("%H")   
-            strTime2=datetime.datetime.now().strftime("%M")
-            strTime=int(strTime)
-            strTime2=int(strTime2)
-            if(strTime>12):
-                strTime=strTime-12
-            speak(f"Sir, the time is {strTime} {strTime2}")
+            try :
+                strTime = datetime.datetime.now().strftime("%H")   
+                strTime2=datetime.datetime.now().strftime("%M")
+                strTime=int(strTime)
+                strTime2=int(strTime2)
+                if(strTime>12):
+                    strTime=strTime-12
+                speak(f"Sir, the time is {strTime} {strTime2}")
+            except:
+                print("Some error occured")
 
-
-        elif 'close google' in query:
-            speak('closing google sir..')
-            codePath = "C:\\Users\\Abir Pal\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-            os.system("taskkill /f /im chrome.exe")
+        elif 'close google' in query or 'close the google' in query:
+            try :
+                speak('closing google sir..')
+                codePath = "C:\\Users\\Abir Pal\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                os.system("taskkill /f /im chrome.exe")
+            except:
+                print("Some error occured")
 
 
 
         # Exit from the program
         elif 'sleep' in query :
-            speak('Sir I am going to sleep, You can call me anytime')
-            break
-        
+            try :
+                speak('Sir I am going to sleep, You can call me anytime')
+                break
+            except:
+                print("Some error occured")
+            
 
-
-        elif 'email' in query:
-            try:
-                speak("What should I say?")
-                content = takeCommand()
-                to = "anish28032002@gmail.com"    
-                sendEmail(to, content)
-                speak("Email has been sent!")
-            except Exception as e:
-                print(e)
-                speak("Sorry Sir . I am not able to send this email. Due to some issue ")    
-
-def boom(speak, wishMe, takeCommando, command):
+def initial(speak, wishMe, takeCommando, command):
     wishMe()
     while True:
         w=takeCommando()
@@ -390,7 +429,7 @@ def boom(speak, wishMe, takeCommando, command):
 
 
 if __name__ == "__main__":
-    boom(speak, wishMe, takeCommando, command)
+    initial(speak, wishMe, takeCommando, command)
 
 
 
